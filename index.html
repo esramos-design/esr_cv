@@ -39,12 +39,14 @@
 
     <!-- Container --><div class="min-h-screen p-4 md:p-8">
         
-        <!-- Main Card Layout --><div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-xl overflow-hidden">
+        <!-- Main Card Layout - Now scrollable with max height -->
+        <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-xl overflow-hidden max-h-[95vh] overflow-y-auto">
             
-            <!-- Header Section --><header class="p-6 md:p-8 bg-gray-900 text-white rounded-t-xl">
+            <!-- Header Section - FIXED/STICKY position -->
+            <header class="p-6 md:p-8 bg-gray-900 text-white rounded-t-xl sticky top-0 z-10">
                 <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
-                    <!-- Profile Picture/Logo - Removed circular container and border --><div class="w-24 h-24 md:w-32 md:h-32 flex items-center justify-center">
-                        <img src="https://cdn.discordapp.com/attachments/988651682122584134/1431273827928637611/es2r_logo.png?ex=68fcd120&is=68fb7fa0&hm=d89188d3777ed64c84cbb9aa970adccf45e9eda9946986a1e448d2c26d68e3da&" alt="ESR 2R Logo" class="w-full h-full object-contain">
+                    <!-- Profile Picture/Logo - FIXED with Imgur link and non-circular styling --><div class="w-24 h-24 md:w-32 md:h-32 flex items-center justify-center">
+                        <img src="https://i.imgur.com/YwO5v8B.png" alt="ESR 2R Logo" class="w-full h-full object-cover">
                     </div>
                     
                     <div class="text-center md:text-left">
