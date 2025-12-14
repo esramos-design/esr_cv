@@ -39,17 +39,28 @@
         .fade-section {
             transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out;
         }
+        /* New styles for dual column scrolling */
+        .scroll-column {
+            max-height: 55vh; /* Reduced height to leave space for header and footer */
+            overflow-y: auto;
+            padding-right: 0.75rem; /* Space for scrollbar */
+        }
+        @media (min-width: 768px) {
+             .scroll-column {
+                max-height: 60vh; /* Taller on desktop */
+            }
+        }
     </style>
 </head>
 <body class="antialiased text-gray-800">
 
     <!-- Container --><div class="min-h-screen p-4 md:p-8">
         
-        <!-- Main Card Layout - Now scrollable with max height -->
-        <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-xl overflow-hidden max-h-[95vh] overflow-y-auto relative">
+        <!-- Main Card Layout - NO longer scrolls, it's the wrapper for the fixed header and scrolling columns -->
+        <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-xl overflow-hidden relative">
             
-            <!-- Header Section - FIXED/STICKY position -->
-            <header class="p-6 md:p-8 bg-gray-900 text-white rounded-t-xl sticky top-0 z-20 relative">
+            <!-- Header Section - FIXED to the top of the card -->
+            <header class="p-6 md:p-8 bg-gray-900 text-white rounded-t-xl z-20 relative">
                 
                 <!-- Settings Toggle Button (Top Right) -->
                 <button id="settingsBtn" class="absolute top-4 right-4 p-2 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors focus:outline-none" title="Customize Sections">
@@ -116,7 +127,8 @@
                     <div class="text-center md:text-left">
                         <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">ELEUTERIO SOUSA RAMOS</h1>
                         <p class="text-xl md:text-2xl font-light text-teal-400 mt-1">Professional Logistic, Safety, and Transportation Specialist</p>
-                        <p class="text-sm mt-3">"Ellie"</p>
+                        <!-- UPDATED: "Ellie" color changed to amber-400 -->
+                        <p class="text-lg font-bold text-amber-400 mt-1">Preferred Name: "Ellie"</p>
                     </div>
                 </div>
 
@@ -148,25 +160,25 @@
                 </div>
             </header>
             
-            <!-- Removed the separate button row as the button is now back in the contact bar -->
-
-            <!-- Main Content Sections --><div class="p-6 md:p-8 space-y-12">
+            <!-- Main Content Grid -->
+            <!-- The fixed height and scroll capability is moved down to the two columns -->
+            <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
                 
-                <!-- 1. Professional Summary (Now using cover letter text) -->
-                <section id="summary-section">
-                    <h2 class="section-title">Professional Summary</h2>
-                    <p class="text-lg leading-relaxed text-gray-700">
-                        A highly adaptable and safety-focused professional with over 15 years of comprehensive experience spanning **logistics, warehousing, transportation, and emergency services**. I possess full proficiency and current certification in all key Forklift Truck classes—**Counterbalance (B1), Reach (R1), and Pivot-Steer "Flexi" (P1)**—ensuring readiness to optimize operational procedures. My career is defined by adaptability, efficiency, and a meticulous focus on safety, including certified experience as a **Safety Attendant Officer** and extensive training in **emergency response**. I excel in upholding the highest standard of health and safety compliance and in effective problem-solving under pressure. I hold **Settled Status**, confirming my unrestricted right to work in the UK, and am multilingual in Spanish, Portuguese, and English.
-                    </p>
-                </section>
-
-                <!-- 2. Core Competencies & Languages (3 Columns: Wide Center - md:grid-cols-5 1/5, 3/5, 1/5) -->
-                <div id="skills-section" class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <!-- LEFT COLUMN: Summary, Skills, Certifications (1/3 width, NOW SCROLLABLE) -->
+                <div class="md:col-span-1 space-y-8 scroll-column">
                     
-                    <!-- Left Column: Languages (1/5) -->
-                    <div class="md:col-span-1">
+                    <!-- 1. Professional Summary (Now using cover letter text) -->
+                    <section id="summary-section">
+                        <h2 class="section-title">Professional Summary</h2>
+                        <p class="text-sm leading-relaxed text-gray-700">
+                            A highly adaptable and safety-focused professional with over 15 years of comprehensive experience spanning **logistics, warehousing, transportation, and emergency services**. I possess full proficiency and current certification in all key Forklift Truck classes—**Counterbalance (B1), Reach (R1), and Pivot-Steer "Flexi" (P1)**—ensuring readiness to optimize operational procedures. My career is defined by adaptability, efficiency, and a meticulous focus on safety, including certified experience as a **Safety Attendant Officer** and extensive training in **emergency response**. I excel in upholding the highest standard of health and safety compliance and in effective problem-solving under pressure. I hold **Settled Status**, confirming my unrestricted right to work in the UK, and am multilingual in Spanish, Portuguese, and English.
+                        </p>
+                    </section>
+
+                    <!-- 2. Languages -->
+                    <div id="languages-section">
                         <h2 class="section-title">Languages</h2>
-                        <ul class="space-y-2">
+                        <ul class="space-y-2 text-sm">
                             <li class="flex justify-between border-b border-gray-100 pb-1">
                                 <span class="font-semibold">English</span>
                                 <span>C1 Professional Fluency</span>
@@ -182,8 +194,8 @@
                         </ul>
                     </div>
 
-                    <!-- Middle Column: Core Skills (3/5 - WIDER) -->
-                    <div class="md:col-span-3">
+                    <!-- 3. Core Competencies -->
+                    <div id="skills-section">
                         <h2 class="section-title">Core Skills</h2>
                         <div class="flex flex-wrap gap-2 text-sm">
                             <span class="bg-teal-100 text-teal-800 px-3 py-1 rounded-full font-medium">Logistics & Supply Chain</span>
@@ -195,154 +207,134 @@
                             <span class="bg-teal-100 text-teal-800 px-3 py-1 rounded-full font-medium">Loading & Dispatch Management</span>
                         </div>
                     </div>
-                    
-                    <!-- Right Column: Spacer (1/5) -->
-                    <div class="md:col-span-1 hidden md:block"></div>
+
+                    <!-- 4. Qualifications & Certifications -->
+                    <section id="certifications-section">
+                        <h2 class="section-title">Certifications & Training</h2>
+                        <div class="space-y-4">
+                            <!-- Licenses -->
+                            <div>
+                                <h3 class="text-sm font-semibold text-gray-700 mb-2 flex items-center"><i data-lucide="truck" class="w-4 h-4 mr-2 text-teal-600"></i> Licenses & Heavy Equipment</h3>
+                                <ul class="space-y-1 text-xs text-gray-700">
+                                    <li class="font-medium">
+                                        <span class="font-extrabold text-teal-700">FLT Licenses: Counterbalance (B1), Reach (R1), Pivot-Steer "Flexi" (P1)</span> 
+                                        - *Refreshed 2023–2026*
+                                    </li>
+                                    <li>DRONE Pilot/Operator License A1+A3 (A2 + GVC in progress)</li>
+                                    <li>PA 1 Chemical Pesticides Handling Licensed (2022)</li>
+                                    <li>IOSH Cargo Handling – CHIP Card (May 2018)</li>
+                                    <li>Sling Loads & Banksman Course (July 2018)</li>
+                                </ul>
+                            </div>
+                            <!-- Safety & Technical Training -->
+                            <div>
+                                <h3 class="text-sm font-semibold text-gray-700 mb-2 flex items-center"><i data-lucide="shield" class="w-4 h-4 mr-2 text-teal-600"></i> Safety & Technical Training</h3>
+                                <ul class="space-y-1 text-xs text-gray-700">
+                                    <li>Safety Passport (March 2024)</li>
+                                    <li>CSCS Course (March 2024)</li>
+                                    <li>Ambulance Crew Technician Course (Portugal)</li>
+                                    <li>First Aid Adult and Pediatrics, AED Operator Certification</li>
+                                    <li>EDEXCEL Forklift Truck Operations Award L2 NVQ</li>
+                                    <li>NCFE Health and Safety L1</li>
+                                    <li>LEAN Principles Certification</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 5. Technical & Soft Skills -->
+                    <section id="technical-section">
+                        <h2 class="section-title">Soft & Technical Skills</h2>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            
+                            <div>
+                                <h3 class="font-semibold mb-1 flex items-center text-teal-600"><i data-lucide="wrench" class="w-4 h-4 mr-2"></i> Attributes</h3>
+                                <ul class="list-disc list-inside ml-4 text-xs space-y-1">
+                                    <li>Organizational Skills</li>
+                                    <li>Teamwork & Collaboration</li>
+                                    <li>Adaptability & Flexibility</li>
+                                    <li>Problem-Solving</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h3 class="font-semibold mb-1 flex items-center text-teal-600"><i data-lucide="code" class="w-4 h-4 mr-2"></i> Software</h3>
+                                <ul class="list-disc list-inside ml-4 text-xs space-y-1">
+                                    <li>Data Analytics (Sheets/Excel)</li>
+                                    <li>Microsoft Office 365</li>
+                                    <li>Adobe Programs</li>
+                                    <li>Computer Hardware Skills</li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </section>
                 </div>
+                
+                <!-- RIGHT COLUMN: Work Experience (2/3 width, NOW SCROLLABLE) -->
+                <div class="md:col-span-2 space-y-8 scroll-column">
+                    <section id="experience-section">
+                        <h2 class="section-title">Work Experience</h2>
+                        <div class="space-y-6">
 
-                <!-- 3. Work Experience -->
-                <section id="experience-section">
-                    <h2 class="section-title">Work Experience</h2>
-                    <div class="space-y-6">
+                            <!-- NEW Role 1: WAREHOUSE OPERATIVE (Various Agencies, including The Best Connection) -->
+                            <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-teal-500 shadow-sm">
+                                <h3 class="text-xl font-bold">WAREHOUSE OPERATIVE</h3>
+                                <p class="text-teal-600 font-semibold">Manby Storage Solutions (via Various Agencies, inc. The Best Connection)</p>
+                                <p class="text-sm text-gray-500 mb-2">October 2025 – Present</p>
+                                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                    <li>Current role focusing on general warehouse operations, inventory control, and logistics support.</li>
+                                    <li>Actively registered with **The Best Connection** and currently operating assignments through various recruitment partners.</li>
+                                    <li>Utilizing full FLT license proficiency (Counterbalance, Reach, Pivot-Steer) in a diverse storage environment.</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Role 2: Warehouse Operative (PROAMPAC PLC) - END DATE UPDATED -->
+                            <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-teal-500 shadow-sm">
+                                <h3 class="text-xl font-bold">WAREHOUSE OPERATIVE</h3>
+                                <p class="text-teal-600 font-semibold">PROAMPAC PLC, Elsham Wold</p>
+                                <p class="text-sm text-gray-500 mb-2">July 2024 – October 2025</p>
+                                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                    <li>Executed end-to-end warehousing duties including loading, unloading, picking, dispatch, and overall logistics management.</li>
+                                    <li>Operated multiple classes of forklift trucks: Counterbalance and Pivot-Steer ("Flexi").</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Role 3: Safety Attendant (P66 PHILLIPS) -->
+                            <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-teal-500 shadow-sm">
+                                <h3 class="text-xl font-bold">SAFETY ATTENDANT OFFICER</h3>
+                                <p class="text-teal-600 font-semibold">P66 PHILLIPS (PRAX OIL REFINERY) / WSG INDUSTRIAL SERVICES</p>
+                                <p class="text-sm text-gray-500 mb-2">March 2024</p>
+                                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                    <li>Served as the primary Fire Prevention and Safety Officer, maintaining strict safety oversight for refinery staff during critical operations.</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Role 4: Warehouse Associate & FLT Driver (Agency Roles - consolidated previous) -->
+                            <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-teal-500 shadow-sm">
+                                <h3 class="text-xl font-bold">WAREHOUSE ASSOCIATE & FLT DRIVER</h3>
+                                <p class="text-teal-600 font-semibold">Various Agencies (STAFFORCE, GI GROUP, DRIVER HIRE, MANPOWER)</p>
+                                <p class="text-sm text-gray-500 mb-2">September 2023 – October 2025</p>
+                                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                    <li>Managed inventory, implemented LEAN-Warehouse layout improvements, and optimized flow for efficient Pick & Dispatch operations.</li>
+                                    <li>Maintained proficiency in operating various forklift classes in high-volume settings.</li>
+                                </ul>
+                            </div>
 
-                        <!-- NEW Role 1: WAREHOUSE OPERATIVE (Various Agencies, including The Best Connection) -->
-                        <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-teal-500 shadow-sm">
-                            <h3 class="text-xl font-bold">WAREHOUSE OPERATIVE</h3>
-                            <p class="text-teal-600 font-semibold">Manby Storage Solutions (via Various Agencies, inc. The Best Connection)</p>
-                            <p class="text-sm text-gray-500 mb-2">October 2025 – Present</p>
-                            <ul class="list-disc list-inside text-gray-700 space-y-1">
-                                <li>Current role focusing on general warehouse operations, inventory control, and logistics support.</li>
-                                <li>Actively registered with **The Best Connection** and currently operating assignments through various recruitment partners.</li>
-                                <li>Utilizing full FLT license proficiency (Counterbalance, Reach, Pivot-Steer) in a diverse storage environment.</li>
-                            </ul>
+                            <!-- Role 5: Emergency Services / Firefighter -->
+                            <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-teal-500 shadow-sm">
+                                <h3 class="text-xl font-bold">AMBULANCE CREW TECHNICIAN, DRIVER & VOLUNTEER FIREFIGHTER</h3>
+                                <p class="text-teal-600 font-semibold">LUSO AMBULANCIAS LTD., HELPED EMERGENCY, FIRE FIGHTING STATION BEATO (Portugal)</p>
+                                <p class="text-sm text-gray-500 mb-2">2011 – 2015</p>
+                                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                    <li>Provided safe and timely transport of emergency and non-emergency patients (including dialysis and medical appointments).</li>
+                                    <li>Functioned as an active volunteer firefighter, including heavy truck (water tanker) driving and emergency response crew duties.</li>
+                                </ul>
+                            </div>
+                            
                         </div>
-                        
-                        <!-- Role 2: Warehouse Operative (PROAMPAC PLC) - END DATE UPDATED -->
-                        <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-teal-500 shadow-sm">
-                            <h3 class="text-xl font-bold">WAREHOUSE OPERATIVE</h3>
-                            <p class="text-teal-600 font-semibold">PROAMPAC PLC, Elsham Wold</p>
-                            <p class="text-sm text-gray-500 mb-2">July 2024 – October 2025</p>
-                            <ul class="list-disc list-inside text-gray-700 space-y-1">
-                                <li>Executed end-to-end warehousing duties including loading, unloading, picking, dispatch, and overall logistics management.</li>
-                                <li>Operated multiple classes of forklift trucks: Counterbalance and Pivot-Steer ("Flexi").</li>
-                            </ul>
-                        </div>
-                        
-                        <!-- Role 3: Safety Attendant (P66 PHILLIPS) -->
-                        <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-teal-500 shadow-sm">
-                            <h3 class="text-xl font-bold">SAFETY ATTENDANT OFFICER</h3>
-                            <p class="text-teal-600 font-semibold">P66 PHILLIPS (PRAX OIL REFINERY) / WSG INDUSTRIAL SERVICES</p>
-                            <p class="text-sm text-gray-500 mb-2">March 2024</p>
-                            <ul class="list-disc list-inside text-gray-700 space-y-1">
-                                <li>Served as the primary Fire Prevention and Safety Officer, maintaining strict safety oversight for refinery staff during critical operations.</li>
-                            </ul>
-                        </div>
-                        
-                        <!-- Role 4: Warehouse Associate & FLT Driver (Agency Roles - consolidated previous) -->
-                        <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-teal-500 shadow-sm">
-                            <h3 class="text-xl font-bold">WAREHOUSE ASSOCIATE & FLT DRIVER</h3>
-                            <p class="text-teal-600 font-semibold">Various Agencies (STAFFORCE, GI GROUP, DRIVER HIRE, MANPOWER)</p>
-                            <p class="text-sm text-gray-500 mb-2">September 2023 – October 2025</p>
-                            <ul class="list-disc list-inside text-gray-700 space-y-1">
-                                <li>Managed inventory, implemented LEAN-Warehouse layout improvements, and optimized flow for efficient Pick & Dispatch operations.</li>
-                                <li>Maintained proficiency in operating various forklift classes in high-volume settings.</li>
-                            </ul>
-                        </div>
-
-                        <!-- Role 5: Emergency Services / Firefighter -->
-                        <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-teal-500 shadow-sm">
-                            <h3 class="text-xl font-bold">AMBULANCE CREW TECHNICIAN, DRIVER & VOLUNTEER FIREFIGHTER</h3>
-                            <p class="text-teal-600 font-semibold">LUSO AMBULANCIAS LTD., HELPED EMERGENCY, FIRE FIGHTING STATION BEATO (Portugal)</p>
-                            <p class="text-sm text-gray-500 mb-2">2011 – 2015</p>
-                            <ul class="list-disc list-inside text-gray-700 space-y-1">
-                                <li>Provided safe and timely transport of emergency and non-emergency patients (including dialysis and medical appointments).</li>
-                                <li>Functioned as an active volunteer firefighter, including heavy truck (water tanker) driving and emergency response crew duties.</li>
-                            </ul>
-                        </div>
-                        
-                    </div>
-                </section>
-
-                <!-- 4. Qualifications & Certifications (3 Columns: Wide Center) -->
-                <section id="certifications-section">
-                    <h2 class="section-title">Certifications & Specialized Skills</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
-                        
-                        <!-- Left Column: Licenses & Heavy Equipment (1/5) -->
-                        <div class="md:col-span-1">
-                            <h3 class="text-lg font-semibold text-gray-700 mb-3 flex items-center"><i data-lucide="truck" class="w-5 h-5 mr-2 text-teal-600"></i> Licenses & Heavy Equipment</h3>
-                            <ul class="space-y-2 text-gray-700">
-                                <li class="font-medium">
-                                    <span class="font-extrabold text-teal-700">FLT Licenses: Counterbalance (B1), Reach (R1), Pivot-Steer "Flexi" (P1)</span> 
-                                    - *Refreshed 2023–2026*
-                                </li>
-                                <li>DRONE Pilot/Operator License A1+A3 (A2 + GVC in progress)</li>
-                                <li>PA 1 Chemical Pesticides Handling Licensed (2022)</li>
-                                <li>IOSH Cargo Handling – CHIP Card (May 2018)</li>
-                                <li>Sling Loads & Banksman Course (July 2018)</li>
-                                <li>Heavy Saw Operator (Previous Experience)</li>
-                            </ul>
-                        </div>
-
-                        <!-- Middle Column: Safety & Technical Training (3/5 - WIDER) -->
-                        <div class="md:col-span-3">
-                            <h3 class="text-lg font-semibold text-gray-700 mb-3 flex items-center"><i data-lucide="shield" class="w-5 h-5 mr-2 text-teal-600"></i> Safety & Technical Training</h3>
-                            <ul class="space-y-2 text-gray-700">
-                                <li>Safety Passport (March 2024)</li>
-                                <li>CSCS Course (March 2024)</li>
-                                <li>Ambulance Crew Technician Course (Portugal)</li>
-                                <li>First Aid Adult and Pediatrics, AED Operator Certification</li>
-                                <li>EDEXCEL Forklift Truck Operations Award L2 NVQ</li>
-                                <li>NCFE Health and Safety L1</li>
-                                <li>LEAN Principles Certification</li>
-                            </ul>
-                        </div>
-                        
-                        <!-- Right Column: Spacer (1/5) -->
-                        <div class="md:col-span-1 hidden md:block"></div>
-                    </div>
-                </section>
-
-                <!-- 5. Technical & Soft Skills (3 Columns: Wide Center) -->
-                <section id="technical-section">
-                    <h2 class="section-title">Technical & Analytical Skills</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
-                        
-                        <!-- Left Column: Software & Data (1/5) -->
-                        <div class="md:col-span-1">
-                            <h3 class="font-semibold mb-1 flex items-center text-teal-600"><i data-lucide="code" class="w-4 h-4 mr-2"></i> Software & Data</h3>
-                            <ul class="list-disc list-inside ml-4 text-sm space-y-1">
-                                <li>Data Analytics (Proficient Google Sheets & Excel)</li>
-                                <li>Microsoft Office 365 (Word, PowerPoint, Outlook)</li>
-                                <li>Adobe Programs</li>
-                                <li>Computer Hardware Skills</li>
-                            </ul>
-                        </div>
-
-                        <!-- Middle Column: Personal Attributes (3/5 - WIDER) -->
-                        <div class="md:col-span-3">
-                            <h3 class="font-semibold mb-1 flex items-center text-teal-600"><i data-lucide="wrench" class="w-4 h-4 mr-2"></i> Personal Attributes</h3>
-                            <ul class="list-disc list-inside ml-4 text-sm space-y-1">
-                                <li>Organizational Skills & Detail Orientation</li>
-                                <li>Good Teamwork & Collaboration</li>
-                                <li>Active Listening</li>
-                                <li>Adaptability & Flexibility</li>
-                                <li>Problem-Solving & Decision Making</li>
-                            </ul>
-                        </div>
-
-                        <!-- Right Column: Interests (1/5) -->
-                        <div class="md:col-span-1">
-                            <h3 class="font-semibold mb-1 flex items-center text-teal-600"><i data-lucide="zap" class="w-4 h-4 mr-2"></i> Interests</h3>
-                            <ul class="list-disc list-inside ml-4 text-sm space-y-1">
-                                <li>Drone Operations</li>
-                                <li>Aviation and Space Enthusiast</li>
-                                <li>Computers and Electronics</li>
-                            </ul>
-                        </div>
-
-                    </div>
-                </section>
+                    </section>
+                </div>
 
             </div>
             
