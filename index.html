@@ -6,8 +6,8 @@
     <title>Eleuterio S. Ramos - Professional Portfolio</title>
     <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
     <!-- Load Lucide Icons --><script type="module">
-        import { createIcons, MapPin, Mail, Phone, Code, Truck, Wrench, Shield, Zap, BookOpen } from 'https://cdn.jsdelivr.net/npm/lucide-icons@0.316.0/dist/esm/lucide.js';
-        createIcons({ icons: { MapPin, Mail, Phone, Code, Truck, Wrench, Shield, Zap, BookOpen } });
+        import { createIcons, MapPin, Mail, Phone, Code, Truck, Wrench, Shield, Zap, BookOpen, Settings, Eye, EyeOff } from 'https://cdn.jsdelivr.net/npm/lucide-icons@0.316.0/dist/esm/lucide.js';
+        createIcons({ icons: { MapPin, Mail, Phone, Code, Truck, Wrench, Shield, Zap, BookOpen, Settings, Eye, EyeOff } });
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
@@ -33,6 +33,10 @@
             background-color: #0d9488; /* Teal underline accent */
             border-radius: 2px;
         }
+        /* Transition for smooth hiding/showing */
+        .fade-section {
+            transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out;
+        }
     </style>
 </head>
 <body class="antialiased text-gray-800">
@@ -40,13 +44,69 @@
     <!-- Container --><div class="min-h-screen p-4 md:p-8">
         
         <!-- Main Card Layout - Now scrollable with max height -->
-        <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-xl overflow-hidden max-h-[95vh] overflow-y-auto">
+        <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-xl overflow-hidden max-h-[95vh] overflow-y-auto relative">
             
             <!-- Header Section - FIXED/STICKY position -->
-            <header class="p-6 md:p-8 bg-gray-900 text-white rounded-t-xl sticky top-0 z-10">
-                <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
+            <header class="p-6 md:p-8 bg-gray-900 text-white rounded-t-xl sticky top-0 z-20 relative">
+                
+                <!-- Settings Toggle Button (Top Right) -->
+                <button id="settingsBtn" class="absolute top-4 right-4 p-2 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors focus:outline-none" title="Customize Sections">
+                    <i data-lucide="settings" class="w-6 h-6 text-teal-400"></i>
+                </button>
+
+                <!-- Settings Dropdown Panel (Hidden by default) -->
+                <div id="settingsPanel" class="hidden absolute top-14 right-4 w-72 bg-white text-gray-800 rounded-lg shadow-2xl border border-gray-200 overflow-hidden z-30">
+                    <div class="bg-gray-100 px-4 py-2 border-b border-gray-200 font-bold text-sm text-gray-600 flex justify-between items-center">
+                        <span>Toggle Modules</span>
+                        <span class="text-xs font-normal text-gray-500">Show/Hide</span>
+                    </div>
+                    <div class="p-2 space-y-1">
+                        <!-- Toggle: Summary -->
+                        <label class="flex items-center justify-between p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <span class="text-sm font-medium">Professional Summary</span>
+                            <div class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="summary-section" class="sr-only peer" checked>
+                                <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-teal-600"></div>
+                            </div>
+                        </label>
+                        <!-- Toggle: Skills -->
+                        <label class="flex items-center justify-between p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <span class="text-sm font-medium">Core Skills & Languages</span>
+                            <div class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="skills-section" class="sr-only peer" checked>
+                                <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-teal-600"></div>
+                            </div>
+                        </label>
+                        <!-- Toggle: Work Experience -->
+                        <label class="flex items-center justify-between p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <span class="text-sm font-medium">Work Experience</span>
+                            <div class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="experience-section" class="sr-only peer" checked>
+                                <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-teal-600"></div>
+                            </div>
+                        </label>
+                        <!-- Toggle: Certifications -->
+                        <label class="flex items-center justify-between p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <span class="text-sm font-medium">Certifications</span>
+                            <div class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="certifications-section" class="sr-only peer" checked>
+                                <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-teal-600"></div>
+                            </div>
+                        </label>
+                        <!-- Toggle: Technical Skills -->
+                        <label class="flex items-center justify-between p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <span class="text-sm font-medium">Technical Skills</span>
+                            <div class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="technical-section" class="sr-only peer" checked>
+                                <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-teal-600"></div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6 pr-10">
                     
-                    <!-- Profile Picture/Logo - Using GitHub Raw Link -->
+                    <!-- Profile Picture/Logo - GitHub Raw Link (stable) -->
                     <div class="w-24 h-24 md:w-32 md:h-32 flex items-center justify-center">
                         <img src="https://raw.githubusercontent.com/esramos-design/esr_cv/main/es2r_logo.png" alt="ESR 2R Logo" class="w-full h-full object-cover rounded-lg shadow-lg">
                     </div>
@@ -80,14 +140,16 @@
 
             <!-- Main Content Sections --><div class="p-6 md:p-8 space-y-12">
                 
-                <!-- 1. Professional Summary --><section>
+                <!-- 1. Professional Summary -->
+                <section id="summary-section">
                     <h2 class="section-title">Professional Summary</h2>
                     <p class="text-lg leading-relaxed text-gray-700">
                         A highly adaptable and safety-focused professional with over 15 years of comprehensive experience spanning **logistics, warehousing, transportation, and emergency services**. Proficient in managing complex inventory, implementing safety protocols, and operating various specialized equipment (FLT B1/R1/P1, Drone A1/A3). I leverage **data analytics skills** (Google Sheets, Excel) to enhance operational efficiency and excel in fast-paced, high-stakes environments, prioritizing immediate problem-solving and meticulous attention to detail.
                     </p>
                 </section>
 
-                <!-- 2. Core Competencies & Languages (Side-by-Side on Desktop) --><div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 2. Core Competencies & Languages (Side-by-Side on Desktop) -->
+                <div id="skills-section" class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     
                     <!-- Core Competencies --><div class="md:col-span-2">
                         <h2 class="section-title">Core Skills</h2>
@@ -122,17 +184,19 @@
                     </div>
                 </div>
 
-                <!-- 3. Work Experience --><section>
+                <!-- 3. Work Experience -->
+                <section id="experience-section">
                     <h2 class="section-title">Work Experience</h2>
                     <div class="space-y-6">
 
-                        <!-- NEW Role 1: Manby Storage Solutions / Manpower -->
+                        <!-- NEW Role 1: WAREHOUSE OPERATIVE (Various Agencies, including The Best Connection) -->
                         <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-teal-500 shadow-sm">
                             <h3 class="text-xl font-bold">WAREHOUSE OPERATIVE</h3>
-                            <p class="text-teal-600 font-semibold">Manby Storage Solutions (via Manpower Agency)</p>
+                            <p class="text-teal-600 font-semibold">Manby Storage Solutions (via Various Agencies, inc. The Best Connection)</p>
                             <p class="text-sm text-gray-500 mb-2">October 2025 – Present</p>
                             <ul class="list-disc list-inside text-gray-700 space-y-1">
                                 <li>Current role focusing on general warehouse operations, inventory control, and logistics support.</li>
+                                <li>Actively registered with **The Best Connection** and currently operating assignments through various recruitment partners.</li>
                                 <li>Utilizing full FLT license proficiency (Counterbalance, Reach, Pivot-Steer) in a diverse storage environment.</li>
                             </ul>
                         </div>
@@ -160,8 +224,8 @@
                         
                         <!-- Role 4: Warehouse Associate & FLT Driver (Agency Roles - consolidated previous) -->
                         <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-teal-500 shadow-sm">
-                            <h3 class="text-xl font-bold">WAREHOUSE ASSOCIATE & FORKLIFT DRIVER</h3>
-                            <p class="text-teal-600 font-semibold">STAFFORCE & GI GROUP, DRIVER HIRE, MANPOWER (Agency Roles)</p>
+                            <h3 class="text-xl font-bold">WAREHOUSE ASSOCIATE & FLT DRIVER</h3>
+                            <p class="text-teal-600 font-semibold">Various Agencies (STAFFORCE, GI GROUP, DRIVER HIRE, MANPOWER)</p>
                             <p class="text-sm text-gray-500 mb-2">September 2023 – October 2025</p>
                             <ul class="list-disc list-inside text-gray-700 space-y-1">
                                 <li>Managed inventory, implemented LEAN-Warehouse layout improvements, and optimized flow for efficient Pick & Dispatch operations.</li>
@@ -183,7 +247,8 @@
                     </div>
                 </section>
 
-                <!-- 4. Qualifications & Certifications (Two Columns) --><section>
+                <!-- 4. Qualifications & Certifications -->
+                <section id="certifications-section">
                     <h2 class="section-title">Certifications & Specialized Skills</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         
@@ -216,7 +281,8 @@
                     </div>
                 </section>
 
-                <!-- 5. Technical & Soft Skills --><section>
+                <!-- 5. Technical & Soft Skills -->
+                <section id="technical-section">
                     <h2 class="section-title">Technical & Analytical Skills</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         
@@ -263,6 +329,45 @@
 
     <!-- Script to set current year in footer --><script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // ---------------------------------------------------------
+        // LOGIC FOR TOGGLING MODULES
+        // ---------------------------------------------------------
+        
+        // 1. Toggle the visibility of the Settings Panel
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsPanel = document.getElementById('settingsPanel');
+
+        settingsBtn.addEventListener('click', (e) => {
+            // Stop propagation so clicking the button doesn't trigger the document click listener immediately
+            e.stopPropagation();
+            settingsPanel.classList.toggle('hidden');
+        });
+
+        // 2. Hide panel when clicking anywhere else
+        document.addEventListener('click', (e) => {
+            if (!settingsPanel.contains(e.target) && !settingsBtn.contains(e.target)) {
+                settingsPanel.classList.add('hidden');
+            }
+        });
+
+        // 3. Logic to show/hide sections based on checkboxes
+        const toggles = document.querySelectorAll('input[type="checkbox"]');
+        
+        toggles.forEach(toggle => {
+            toggle.addEventListener('change', (e) => {
+                const targetId = e.target.value; // e.g., "summary-section"
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    if (e.target.checked) {
+                        targetElement.classList.remove('hidden');
+                    } else {
+                        targetElement.classList.add('hidden');
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html>
