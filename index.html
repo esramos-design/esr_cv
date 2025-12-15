@@ -6,8 +6,8 @@
     <title>Eleuterio S. Ramos - Professional Portfolio</title>
     <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
     <!-- Load Lucide Icons --><script type="module">
-        import { createIcons, MapPin, Mail, Phone, Code, Truck, Wrench, Shield, Zap, BookOpen, Settings, Eye, EyeOff } from 'https://cdn.jsdelivr.net/npm/lucide-icons@0.316.0/dist/esm/lucide.js';
-        createIcons({ icons: { MapPin, Mail, Phone, Code, Truck, Wrench, Shield, Zap, BookOpen, Settings, Eye, EyeOff } });
+        import { createIcons, MapPin, Mail, Phone, Code, Truck, Wrench, Shield, Zap, BookOpen, Settings, Eye, EyeOff, Lock } from 'https://cdn.jsdelivr.net/npm/lucide-icons@0.316.0/dist/esm/lucide.js';
+        createIcons({ icons: { MapPin, Mail, Phone, Code, Truck, Wrench, Shield, Zap, BookOpen, Settings, Eye, EyeOff, Lock } });
     </script>
     
     <!-- CSS STYLES (Simulating style.css) -->
@@ -41,23 +41,26 @@
         }
         /* New styles for dual column scrolling */
         .scroll-column {
-            max-height: 55vh; /* Reduced height to leave space for header and footer */
+            /* Increased height for desktop and mobile views */
+            max-height: 60vh; 
             overflow-y: auto;
             padding-right: 0.75rem; /* Space for scrollbar */
         }
         @media (min-width: 768px) {
              .scroll-column {
-                max-height: 60vh; /* Taller on desktop */
+                /* Increased height for desktop views */
+                max-height: 70vh; 
             }
         }
     </style>
 </head>
 <body class="antialiased text-gray-800">
 
-    <!-- Container --><div class="min-h-screen p-4 md:p-8">
+    <!-- CV CONTENT CONTAINER -->
+    <div class="min-h-screen p-4 md:p-8">
         
-        <!-- Main Card Layout - NO longer scrolls, it's the wrapper for the fixed header and scrolling columns -->
-        <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-xl overflow-hidden relative">
+        <!-- Main Card Layout - Max width increased from 4xl to 5xl -->
+        <div class="max-w-5xl mx-auto bg-white shadow-2xl rounded-xl overflow-hidden relative">
             
             <!-- Header Section - FIXED to the top of the card -->
             <header class="p-6 md:p-8 bg-gray-900 text-white rounded-t-xl z-20 relative">
@@ -334,6 +337,16 @@
                             
                         </div>
                     </section>
+                    
+                    <!-- Added Interests back to the main column since they were removed from the left side's layout optimization -->
+                    <section>
+                        <h2 class="section-title">Interests</h2>
+                        <ul class="list-disc list-inside ml-4 text-sm space-y-1 text-gray-700">
+                            <li>Drone Operations</li>
+                            <li>Aviation and Space Enthusiast</li>
+                            <li>Computers and Electronics</li>
+                        </ul>
+                    </section>
                 </div>
 
             </div>
@@ -345,36 +358,33 @@
         </div>
     </div>
 
-    <!-- Script to set current year in footer (Simulating script.js) --><script>
+    <!-- Script to set current year in footer (Simulating script.js) -->
+    <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
         // ---------------------------------------------------------
-        // LOGIC FOR TOGGLING MODULES
+        // LOGIC FOR TOGGLING MODULES (CV Customizer)
         // ---------------------------------------------------------
         
-        // 1. Toggle the visibility of the Settings Panel
         const settingsBtn = document.getElementById('settingsBtn');
         const settingsPanel = document.getElementById('settingsPanel');
 
         settingsBtn.addEventListener('click', (e) => {
-            // Stop propagation so clicking the button doesn't trigger the document click listener immediately
             e.stopPropagation();
             settingsPanel.classList.toggle('hidden');
         });
 
-        // 2. Hide panel when clicking anywhere else
         document.addEventListener('click', (e) => {
             if (!settingsPanel.contains(e.target) && !settingsBtn.contains(e.target)) {
                 settingsPanel.classList.add('hidden');
             }
         });
 
-        // 3. Logic to show/hide sections based on checkboxes
         const toggles = document.querySelectorAll('input[type="checkbox"]');
         
         toggles.forEach(toggle => {
             toggle.addEventListener('change', (e) => {
-                const targetId = e.target.value; // e.g., "summary-section"
+                const targetId = e.target.value;
                 const targetElement = document.getElementById(targetId);
                 
                 if (targetElement) {
